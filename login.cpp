@@ -1,23 +1,37 @@
 //Name: Priyanka Yeole
 #include<iostream>
 #include<fstream>
+#include<string>
 using namespace std;
 bool isLoggedIn(){
-    string username,password,un,pw;
+    string username,password;
+    bool isFound1 = 0;
+    bool isFound2 = 0;
 
     cout<<"Enter Username- ";cin>>username;
     cout<<"Enter Pasword- ";cin>>password;
 
     ifstream fin("C:\\priyanka\\programs\\data.txt");
-    getline(fin,un);
-    getline(fin,pw);
-
-    if(un == username && pw == password){
-        return true;
+    while(!fin.eof()){
+        string temp;
+        getline(fin,temp);
+        if(temp.compare(username) == 0){
+            isFound1 = 1;
+        }
+        if(temp.compare(password) == 0){
+            isFound2 = 1;
+            return true;      
+            break;
+        }
+        if(isFound1){
+            isFound1 = 0;
+        }
     }
-    else{
+    if(!isFound2)
+	{		
         return false;
-    }
+	}
+
 }
  int main(){
     int choice;
@@ -25,11 +39,11 @@ bool isLoggedIn(){
     cin>> choice;
 
     if(choice == 1){
-        int username, password;
-        cout<<"Enter username- ";cin>>username;
-        cout<<"Enter password- ";cin>>password;
-        ofstream fout("C:\\priyanka\\programs\\data.txt");
-        fout<<username<<endl<<password;
+        string username,password;
+        cout<<"Enter Username- ";cin>>username;
+        cout<<"Enter Pasword- ";cin>>password;
+        ofstream fout("C:\\priyanka\\programs\\data.txt", ios::app);
+        fout<<username<<endl<<password<<endl;
         fout.close();
     }
 
